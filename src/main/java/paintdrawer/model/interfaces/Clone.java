@@ -9,5 +9,5 @@ import paintdrawer.model.Shape;
  *
  */
 public interface Clone {
-    public Shape clone();
+    public Shape cloneShape();
 }

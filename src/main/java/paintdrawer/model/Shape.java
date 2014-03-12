@@ -12,7 +12,8 @@ import java.io.Serializable;
  * An abstract class that represents a Shape
  *
  */
-public abstract class Shape implements Serializable, Clone {
+public abstract class Shape implements Serializable, Clone
+{
     private int size = 30;
     private Color color;
     private int lineWidth;
