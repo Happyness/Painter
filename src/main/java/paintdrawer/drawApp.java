@@ -1,5 +1,7 @@
-import controller.FrontController;
-import view.Dashboard;
+package paintdrawer;
+
+import paintdrawer.controller.FrontController;
+import paintdrawer.view.Dashboard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +22,6 @@ public class drawApp extends JFrame
         setLocationRelativeTo(this);
 
         ResourceManager resources = new ResourceManager();
-
         setIconImage(resources.getIconImage("icon", "png"));
 
         JPanel layoutContainer      = new JPanel();
@@ -34,11 +35,19 @@ public class drawApp extends JFrame
 
         //window.setJMenuBar(menu);
         add(layoutContainer);
+        //pack();
         setVisible(true);
     }
 
     public static void main(String[] args)
     {
-        drawApp draw = new drawApp();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                drawApp draw = new drawApp();
+            }
+        };
+
+        SwingUtilities.invokeLater(r);
     }
 }

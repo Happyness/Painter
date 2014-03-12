@@ -1,4 +1,4 @@
-package controller;
+package paintdrawer.controller;
 
 /**
  * Created by joel on 2014-03-12.

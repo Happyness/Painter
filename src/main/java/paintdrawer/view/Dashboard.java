@@ -1,4 +1,4 @@
-package view;
+package paintdrawer.view;
 
 import javax.swing.*;
 
