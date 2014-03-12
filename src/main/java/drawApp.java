@@ -7,16 +7,21 @@ import java.awt.*;
 /**
  * Created by joel on 2014-03-12.
  */
-public class drawApp
+public class drawApp extends JFrame
 {
     public drawApp()
     {
+        super("Paint drawer app");
+
         // Create frame with properties
-        JFrame window = new JFrame("Painter");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setBounds(100, 100, 640, 480);
-        window.setResizable(false);
-        window.setLocationRelativeTo(window);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 640, 480);
+        setResizable(false);
+        setLocationRelativeTo(this);
+
+        ResourceManager resources = new ResourceManager();
+
+        setIconImage(resources.getIconImage("icon", "png"));
 
         JPanel layoutContainer      = new JPanel();
         FrontController front       = new FrontController();
@@ -28,8 +33,8 @@ public class drawApp
         layoutContainer.add(paintCanvas, BorderLayout.CENTER);
 
         //window.setJMenuBar(menu);
-        window.add(layoutContainer);
-        window.setVisible(true);
+        add(layoutContainer);
+        setVisible(true);
     }
 
     public static void main(String[] args)
