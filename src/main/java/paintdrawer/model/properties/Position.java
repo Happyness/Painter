@@ -1,4 +1,4 @@
-package model.properties;
+package paintdrawer.model.properties;
 
 import java.io.Serializable;
 

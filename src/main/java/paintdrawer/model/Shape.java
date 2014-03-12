@@ -1,6 +1,6 @@
-package model;
+package paintdrawer.model;
 
-import model.properties.Position;
+import paintdrawer.model.properties.Position;
 
 import java.awt.*;
 import java.io.Serializable;
