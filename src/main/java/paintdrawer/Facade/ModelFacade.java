@@ -27,7 +27,7 @@ public class ModelFacade extends Observable {
 
         for (Shape s : prototypeShapes) {
             if (s.getName().equalsIgnoreCase(shapeName)) {
-                shape = s.clone();
+                shape = s.cloneShape();
                 break;
             }
         }
