@@ -1,5 +1,6 @@
 package paintdrawer.model;
 
+import paintdrawer.model.interfaces.Clone;
 import paintdrawer.model.properties.Position;
 
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * An abstract class that represents a Shape
  *
  */
-public abstract class Shape implements Serializable {
+public abstract class Shape implements Serializable, Clone {
     private int size = 30;
     private Color color;
     private int lineWidth;
@@ -87,7 +88,10 @@ public abstract class Shape implements Serializable {
         this.position = position;
     }
 
+    public String getName() { return this.getClass().getSimpleName(); }
+
     protected void drawShape(Graphics2D shape) {}
 
     protected void drawFilledShape(Graphics2D filledShape) {}
+
 }

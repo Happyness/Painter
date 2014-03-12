@@ -19,4 +19,9 @@ public class Rectangle extends Shape {
     protected void drawFilledShape(Graphics2D filledShape) {
         filledShape.fillRect(this.getPosition().getX(), this.getPosition().getY(), this.getSize(), this.getSize());
     }
+
+    @Override
+    public Shape clone() {
+        return new Rectangle();
+    }
 }
