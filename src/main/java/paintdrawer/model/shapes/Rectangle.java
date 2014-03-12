@@ -1,6 +1,7 @@
-package paintdrawer.model;
+package paintdrawer.model.shapes;
 
 import java.awt.*;
+import paintdrawer.model.abstracts.Shape;
 
 /**
  * @author Mats Maatson, Joel Denke
