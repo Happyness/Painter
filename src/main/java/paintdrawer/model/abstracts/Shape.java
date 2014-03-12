@@ -1,4 +1,4 @@
-package paintdrawer.model.abstracts;
+package paintdrawer.model;
 
 import paintdrawer.model.interfaces.Clone;
 import paintdrawer.model.properties.Position;
@@ -20,10 +20,11 @@ public abstract class Shape implements Serializable, Clone {
     private boolean marked;
     private Position position;
 
-    public void init(Color color, int lineWidth, boolean filled, int x, int y) {
+    public void init(Color color, int lineWidth, boolean filled, boolean marked, int x, int y) {
         this.color = color;
         this.lineWidth = lineWidth;
         this.filled = filled;
+        this.marked = marked;
         this.position = new Position(x, y);
     }
 
