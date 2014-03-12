@@ -1,0 +1,27 @@
+package model.properties;
+
+import java.io.Serializable;
+
+/**
+ * @author Mats Maatson, Joel Denke
+ *
+ * An class that represents a postion for a Shape
+ *
+ */
+public class Position implements Serializable {
+    private int x;
+    private int y;
+
+    public Position(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+}
