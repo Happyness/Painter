@@ -1,4 +1,4 @@
-package paintdrawer.model;
+package paintdrawer.model.abstracts;
 
 import paintdrawer.model.interfaces.Clone;
 import paintdrawer.model.properties.Position;
@@ -13,19 +13,17 @@ import java.io.Serializable;
  *
  */
 public abstract class Shape implements Serializable, Clone {
-    private int size = 30;
+    private int SIZE = 30;
     private Color color;
     private int lineWidth;
     private boolean filled;
     private boolean marked;
     private Position position;
 
-    public void init(int size, Color color, int lineWidth, boolean filled, boolean marked, int x, int y) {
-        this.size = size;
+    public void init(Color color, int lineWidth, boolean filled, int x, int y) {
         this.color = color;
         this.lineWidth = lineWidth;
         this.filled = filled;
-        this.marked = marked;
         this.position = new Position(x, y);
     }
 
@@ -46,7 +44,7 @@ public abstract class Shape implements Serializable, Clone {
         }
     }
 
-    public int getSize() { return size; }
+    public int getSize() { return SIZE; }
 
     public Color getColor() {
         return color;

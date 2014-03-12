@@ -1,4 +1,4 @@
-package paintdrawer.model;
+package paintdrawer.model.shapes;
 
 import java.awt.*;
 
@@ -8,7 +8,7 @@ import java.awt.*;
  * An class that represents a Rectangle
  *
  */
-public class Rectangle extends Shape {
+public class Rectangle extends paintdrawer.model.abstracts.Shape {
 
     @Override
     protected void drawShape(Graphics2D shape) {
@@ -21,7 +21,7 @@ public class Rectangle extends Shape {
     }
 
     @Override
-    public Shape clone() {
+    public paintdrawer.model.abstracts.Shape clone() {
         return new Rectangle();
     }
 }
