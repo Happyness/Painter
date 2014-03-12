@@ -16,9 +16,7 @@ public class ResourceManager
 
     public URL getResource(String path, String suffix)
     {
-         URL url = getClass().getResource(String.format("%s.%s", path, suffix));
-         System.out.println(String.format("%s.%s", path, suffix));
-
+         System.out.println(String.format("Loading resource %s.%s", path, suffix));
          return getClass().getResource(String.format("%s.%s", path, suffix));
     }
 
