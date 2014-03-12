@@ -7,7 +7,7 @@ import paintdrawer.view.Dashboard;
  */
 public class DashboardController
 {
-    public DashboardController(Dashboard dashboard)
+    public DashboardController(FrontController front, Dashboard dashboard)
     {
 
     }

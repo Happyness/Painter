@@ -1,19 +1,30 @@
 package paintdrawer.controller;
 
+import paintdrawer.model.FrontFacade;
 import paintdrawer.view.Dashboard;
 import paintdrawer.view.Menu;
 
 /**
- * Created by joel on 2014-03-12.
+ * @author Mats Maatson, Joel Denke
+ *
+ * Front Controller to cover all controllers, hide complexity between controllers
+ *
  */
 public class FrontController
 {
+    private FrontFacade model;
     private DashboardController dashboard;
     private MenuController menu;
 
-    public FrontController(Dashboard dashboard, Menu menu)
+    public FrontController(FrontFacade model, Dashboard dashboard, Menu menu)
     {
-        this.dashboard = new DashboardController(dashboard);
-        this.menu = new MenuController(menu);
+        this.model     = model;
+        this.dashboard = new DashboardController(this, dashboard);
+        this.menu      = new MenuController(this, menu);
+    }
+
+    public FrontFacade getModel()
+    {
+        return model;
     }
 }

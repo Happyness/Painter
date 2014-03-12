@@ -7,16 +7,25 @@ import paintdrawer.view.MenuTab;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Created by joel on 2014-03-12.
+ * @author Mats Maatson, Joel Denke
+ *
+ * Menu action controller
+ *
  */
 public class MenuController implements ActionListener
 {
-    public MenuController(Menu menu)
+    private FrontController front;
+    private Menu menu;
+
+    public MenuController(FrontController front, Menu menu)
     {
+        this.front = front;
+        this.menu  = menu;
         addActionListeners(menu.getMenuTab(MenuTab.FILE));
         addActionListeners(menu.getMenuTab(MenuTab.FILE));
     }
@@ -42,6 +51,27 @@ public class MenuController implements ActionListener
 
         if (e.getActionCommand().equals(MenuEntry.UNDO.name())) {
             //model.undo();
+        }
+
+        if (e.getActionCommand().equals(MenuEntry.SAVE.name())) {
+            File file = menu.validFileDialog(false, new File("shapes.txt"));
+
+            if (file != null) {
+                if(!front.getModel().save(file)) {
+                    JOptionPane.showMessageDialog(null, "Failed saving file to disk");
+                }
+            }
+        }
+
+        if (e.getActionCommand().equals(MenuEntry.OPEN.name()))
+        {
+            File file = menu.validFileDialog(true, new File("shapes.txt"));
+
+            if (file != null) {
+                if(!front.getModel().load(file)) {
+                    JOptionPane.showMessageDialog(null, "Failed load selected file");
+                }
+            }
         }
     }
 }

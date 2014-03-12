@@ -1,6 +1,7 @@
 package paintdrawer;
 
 import paintdrawer.controller.FrontController;
+import paintdrawer.model.FrontFacade;
 import paintdrawer.view.Canvas;
 import paintdrawer.view.Dashboard;
 import paintdrawer.view.Menu;
@@ -9,7 +10,10 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by joel on 2014-03-12.
+ * @author Mats Maatson, Joel Denke
+ *
+ * Main draw application
+ *
  */
 public class drawApp extends JFrame
 {
@@ -29,12 +33,12 @@ public class drawApp extends JFrame
         setIconImage(resources.getIconImage("icon", "png"));
 
         Menu menu                   = new Menu();
-        FrontController front       = new FrontController(new Dashboard(), menu);
+        FrontController front       = new FrontController(new FrontFacade(), new Dashboard(), menu);
         Dashboard       dashboard   = new Dashboard();
         Canvas paintCanvas          = new Canvas();
 
         layoutContainer.setLayout(new BorderLayout(0, 0));
-        layoutContainer.add(dashboard, BorderLayout.NORTH);
+        layoutContainer.add(dashboard, BorderLayout.WEST);
         layoutContainer.add(paintCanvas, BorderLayout.CENTER);
 
         setJMenuBar(menu);

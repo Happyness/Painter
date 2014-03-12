@@ -1,17 +1,22 @@
 package paintdrawer.view;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Created by joel on 2014-03-12.
+ * @author Mats Maatson, Joel Denke
+ *
+ * View menu, used by Java Swing menu
+ *
  */
 public class Menu extends JMenuBar
 {
-    Map<MenuEntry, JMenuItem> fileTab = new HashMap<MenuEntry, JMenuItem>();
-    Map<MenuEntry, JMenuItem> editTab = new HashMap<MenuEntry, JMenuItem>();
+    private final JFileChooser fileDialog = new JFileChooser();
+    private Map<MenuEntry, JMenuItem> fileTab = new HashMap<MenuEntry, JMenuItem>();
+    private Map<MenuEntry, JMenuItem> editTab = new HashMap<MenuEntry, JMenuItem>();
 
     public Menu()
     {
@@ -47,5 +52,19 @@ public class Menu extends JMenuBar
              case EDIT : return editTab;
              default   : return null;
          }
+    }
+
+
+    public File validFileDialog(boolean open, File file)
+    {
+        fileDialog.setSelectedFile(file);
+
+        int response = open ? fileDialog.showOpenDialog(this) : fileDialog.showSaveDialog(this);
+
+        if (response == JFileChooser.APPROVE_OPTION) {
+            return fileDialog.getSelectedFile();
+        } else {
+            return null;
+        }
     }
 }
