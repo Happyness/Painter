@@ -11,7 +11,8 @@ import java.io.Serializable;
  * An abstract class that represents a Shape
  *
  */
-public abstract class Shape implements Serializable {
+public abstract class Shape implements Serializable
+{
     private Color color;
     private int lineWidth;
     private boolean isFilled;
