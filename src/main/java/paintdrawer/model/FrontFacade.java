@@ -1,6 +1,8 @@
 package paintdrawer.model;
-;
+
 import paintdrawer.controller.FrontController;
+import paintdrawer.model.commands.AddAction;
+import paintdrawer.model.interfaces.Command;
 import paintdrawer.model.shapes.Shape;
 import paintdrawer.model.properties.ColorMap;
 import paintdrawer.model.properties.LineSize;
@@ -22,6 +24,8 @@ public class FrontFacade extends Observable
 {
     private List<Shape> shapes = new ArrayList<Shape>();
     private List<Shape> prototypes = new ArrayList<Shape>();
+    private Stack<Command> undoStack = new Stack<Command>();
+    private Stack<Command> redoStack = new Stack<Command>();
     private Shape activeShape;
     private FrontController front;
 
@@ -48,7 +52,10 @@ public class FrontFacade extends Observable
             if (s.toString().equalsIgnoreCase(shapeName)) {
                 Shape shape = s.cloneShape();
                 shape.init(color, lineWidth, filled, x, y);
-                addShape(shape);
+
+                Command addCommand = new AddAction(shape, this);
+                setCommand(addCommand);
+
                 front.update();
             }
         }
@@ -71,12 +78,22 @@ public class FrontFacade extends Observable
 
     public void undo()
     {
-         // @TODO: Fix history stack with latest shape changes and call latest command and unexecute/undo
+        if (!undoStack.empty()) {
+            Command command = undoStack.pop();
+            command.unexecute();
+            redoStack.push(command);
+            front.update();
+        }
     }
 
     public void redo()
     {
-        // @TODO: Fix history stack with latest shape changes and call latest command and execute/redo
+        if (!undoStack.empty()) {
+            Command command = redoStack.pop();
+            command.execute();
+            undoStack.push(command);
+            front.update();
+        }
     }
 
     public void addShape(Shape shape)
@@ -123,5 +140,12 @@ public class FrontFacade extends Observable
         }
 
         return true;
+    }
+
+    private void setCommand(Command command) {
+        redoStack.clear();
+        undoStack.push(command);
+        command.execute();
+
     }
 }

@@ -30,9 +30,4 @@ public class AddAction implements Command {
     public void unexecute() {
         model.removeShape(shape);
     }
-
-    @Override
-    public void reexecute() {
-        // TODO: redo
-    }
 }
