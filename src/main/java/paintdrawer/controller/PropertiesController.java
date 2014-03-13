@@ -16,6 +16,13 @@ public class PropertiesController implements ActionListener
 {
     private FrontController front;
     private PropertiesTile propertiesTile;
+    private Shape markedShape;
+
+    private final int SIZE = 0;
+    private final int LINEWIDTH = 1;
+    private final int COLOR = 2;
+    private final int CLOSE = 3;
+    private final int SAVE = 4;
 
     public PropertiesController(FrontController front, PropertiesTile propertiesTile)
     {
@@ -27,19 +34,23 @@ public class PropertiesController implements ActionListener
 
     private void initListeners(PropertiesTile propertiesTile)
     {
-        JComboBox lineBox = (JComboBox) propertiesTile.getComponent(0);
+        JComboBox sizeBox = (JComboBox) propertiesTile.getComponent(SIZE);
+        sizeBox.setActionCommand(PropertiesTile.Components.SIZE.name());
+        sizeBox.addActionListener(this);
+
+        JComboBox lineBox = (JComboBox) propertiesTile.getComponent(LINEWIDTH);
         lineBox.setActionCommand(PropertiesTile.Components.LINEWIDTH.name());
         lineBox.addActionListener(this);
 
-        JComboBox colorBox = (JComboBox) propertiesTile.getComponent(1);
+        JComboBox colorBox = (JComboBox) propertiesTile.getComponent(COLOR);
         colorBox.setActionCommand(PropertiesTile.Components.COLOR.name());
         colorBox.addActionListener(this);
 
-        JButton closeButton = (JButton) propertiesTile.getComponent(2);
+        JButton closeButton = (JButton) propertiesTile.getComponent(CLOSE);
         closeButton.setActionCommand(PropertiesTile.Components.CLOSE.name());
         closeButton.addActionListener(this);
 
-        JButton saveButton = (JButton) propertiesTile.getComponent(3);
+        JButton saveButton = (JButton) propertiesTile.getComponent(SAVE);
         saveButton.setActionCommand(PropertiesTile.Components.SAVE.name());
         saveButton.addActionListener(this);
     }
@@ -55,6 +66,7 @@ public class PropertiesController implements ActionListener
             Shape shape = front.getModel().getActiveShape();
 
             if (shape != null) {
+                shape.setSize(propertiesTile.getShapeSize());
                 shape.setColor(propertiesTile.getColor());
                 shape.setLineWidth(propertiesTile.getLineSize());
                 shape.setMarked(false);
@@ -85,16 +97,23 @@ public class PropertiesController implements ActionListener
     {
         Shape s = getIntersectingShape(e);
 
+        if (markedShape != null) {
+            markedShape.setMarked(false);
+            markedShape = null;
+        }
+
         if (s != null) {
             if (s.isMarked()) {
                 s.setMarked(false);
             } else {
+                markedShape = s;
                 s.setMarked(true);
                 front.getModel().setActiveShape(s);
                 System.out.println("Set active shape");
             }
         }
 
+        propertiesTile.setVisible(true);
         front.update();
     }
 }

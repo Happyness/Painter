@@ -3,6 +3,7 @@ package paintdrawer.model;
 import paintdrawer.controller.FrontController;
 import paintdrawer.model.commands.AddAction;
 import paintdrawer.model.interfaces.Command;
+import paintdrawer.model.properties.ShapeSize;
 import paintdrawer.model.shapes.Shape;
 import paintdrawer.model.properties.ColorMap;
 import paintdrawer.model.properties.LineSize;
@@ -46,19 +47,29 @@ public class FrontFacade extends Observable
         return prototypes;
     }
 
-    public void addShape(String shapeName, int x, int y, int lineWidth, boolean filled, Color color)
+    public void addShape(String shapeName, int size, int x, int y, int lineWidth, boolean filled, Color color)
     {
         for (Shape s : prototypes) {
             if (s.toString().equalsIgnoreCase(shapeName)) {
                 Shape shape = s.cloneShape();
-                shape.init(color, lineWidth, filled, x, y);
+                shape.init(color, lineWidth, size, filled, x, y);
 
                 Command addCommand = new AddAction(shape, this);
-                setCommand(addCommand);
+                executeCommand(addCommand);
 
                 front.update();
             }
         }
+    }
+
+    public List<ShapeSize> getShapeSizes()
+    {
+        ArrayList<ShapeSize> sizeList = new ArrayList<ShapeSize>();
+        sizeList.add(new ShapeSize(30));
+        sizeList.add(new ShapeSize(50));
+        sizeList.add(new ShapeSize(70));
+
+        return sizeList;
     }
 
     public List<LineSize> getLineWidths()
@@ -88,7 +99,7 @@ public class FrontFacade extends Observable
 
     public void redo()
     {
-        if (!undoStack.empty()) {
+        if (!undoStack.empty() && !redoStack.empty()) {
             Command command = redoStack.pop();
             command.execute();
             undoStack.push(command);
@@ -142,10 +153,10 @@ public class FrontFacade extends Observable
         return true;
     }
 
-    private void setCommand(Command command) {
+    public void executeCommand(Command command)
+    {
         redoStack.clear();
         undoStack.push(command);
         command.execute();
-
     }
 }

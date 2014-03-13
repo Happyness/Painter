@@ -1,6 +1,7 @@
 package paintdrawer.view;
 
 import paintdrawer.controller.FrontController;
+import paintdrawer.model.commands.MoveAction;
 import paintdrawer.model.shapes.Shape;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ import java.util.Observer;
 public class Canvas extends JPanel implements Observer, MouseListener, MouseMotionListener
 {
     private FrontController front;
-    private Shape movingShape;
+    private MoveAction action;
 
     public Canvas(FrontController front)
     {
@@ -61,6 +62,7 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
 
                 front.getModel().addShape(
                     shape,
+                    properties.getShapeSize(),
                     e.getX(), e.getY(),
                     properties.getLineSize(), false, properties.getColor()
                 );
@@ -76,15 +78,19 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
 
         Shape s = front.getProperties().getIntersectingShape(e);
 
-        if (s != null && movingShape == null) {
-            movingShape = s;
+        if (s != null && action == null && !SwingUtilities.isRightMouseButton(e)) {
+            action = new MoveAction(s, front);
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e)
     {
-        this.movingShape = null;
+        if (action != null) {
+            action.setPosition(e.getX(), e.getY());
+            front.getModel().executeCommand(action);
+            action = null;
+        }
     }
 
     @Override
@@ -98,12 +104,11 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
     }
 
     @Override
-    public void mouseDragged(MouseEvent e)
-    {
-        if (movingShape != null) {
+    public void mouseDragged(MouseEvent e){
+        if (action != null) {
             System.out.println("Moving");
 
-            movingShape.setPosition(e.getX(), e.getY());
+            action.getShape().setPosition(e.getX(), e.getY());
             repaint();
         }
     }

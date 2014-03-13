@@ -14,16 +14,17 @@ import java.io.Serializable;
  */
 public abstract class Shape implements Serializable, Clone
 {
-    private int SIZE = 30;
+    private int size;
     private Color color;
     private int lineWidth;
     private boolean filled;
     private boolean marked;
     private int x, y;
 
-    public void init(Color color, int lineWidth, boolean filled, int x, int y)
+    public void init(Color color, int lineWidth, int size, boolean filled, int x, int y)
     {
         this.color = color;
+        this.size  = size;
         this.lineWidth = lineWidth;
         this.filled = filled;
         this.x      = x;
@@ -32,7 +33,7 @@ public abstract class Shape implements Serializable, Clone
 
     public boolean intersects(int x, int y)
     {
-        return x >= this.x && x <= this.x + SIZE && y >= this.y && y <= this.y + SIZE;
+        return x >= this.x && x <= this.x + size && y >= this.y && y <= this.y + size;
     }
 
     public void draw(Graphics g)
@@ -44,11 +45,13 @@ public abstract class Shape implements Serializable, Clone
         } else {
             shape.setColor(color);
         }
+
         shape.setStroke(new BasicStroke(lineWidth));
         drawShape(shape, filled);
     }
 
-    public int getSize() { return SIZE; }
+    public void setSize(int size) { this.size = size; }
+    public int getSize() { return size; }
 
     public Color getColor()
     {
