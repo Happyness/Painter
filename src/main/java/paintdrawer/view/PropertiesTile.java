@@ -54,14 +54,32 @@ public class PropertiesTile extends Toolbar implements Observer
         return new ColorMap(Color.class).getColor(selected);
     }
 
+    public LineSize getLineSizeObject(int size)
+    {
+        for (LineSize ls: front.getModel().getLineWidths()) {
+            if (ls.getSize() == size) {
+                return ls;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public void update(Observable o, Object arg)
     {
         Shape shape = front.getModel().getActiveShape();
 
         if (shape != null) {
-            getBox(0).setSelectedItem(shape.getLineWidth());
-            getBox(1).setSelectedItem(shape.getColor());
+            System.out.println("We have a active shape, yay");
+            System.out.println(getBox(0).getSelectedItem());
+
+            getBox(0).setSelectedItem(getLineSizeObject(shape.getLineWidth()).toString());
+
+            System.out.println(getBox(0).getSelectedItem());
+
+
+            getBox(1).setSelectedItem(shape.getColor().toString());
         }
     }
 }

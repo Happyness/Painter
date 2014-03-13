@@ -52,11 +52,18 @@ public class PropertiesController implements ActionListener
         }
 
         if (e.getActionCommand().equals(PropertiesTile.Components.SAVE.name())) {
-            front.update();
+            Shape shape = front.getModel().getActiveShape();
+
+            if (shape != null) {
+                shape.setColor(propertiesTile.getColor());
+                shape.setLineWidth(propertiesTile.getLineSize());
+                shape.setMarked(false);
+                front.update();
+            }
         }
     }
 
-    public void togglePropertyBoard(MouseEvent e)
+    public Shape getIntersectingShape(MouseEvent e)
     {
         int x = e.getX(), y = e.getY();
         List<Shape> shapes = front.getModel().getShapes();
@@ -67,16 +74,27 @@ public class PropertiesController implements ActionListener
             s = shapes.get(i);
 
             if (s.intersects(x, y)) {
-                if (s.isMarked()) {
-                    s.setMarked(false);
-                } else {
-                    s.setMarked(true);
-                }
-
-                propertiesTile.setVisible(true);
-                front.update();
-                break;
+                return s;
             }
         }
+
+        return null;
+    }
+
+    public void togglePropertyBoard(MouseEvent e)
+    {
+        Shape s = getIntersectingShape(e);
+
+        if (s != null) {
+            if (s.isMarked()) {
+                s.setMarked(false);
+            } else {
+                s.setMarked(true);
+                front.getModel().setActiveShape(s);
+                System.out.println("Set active shape");
+            }
+        }
+
+        front.update();
     }
 }

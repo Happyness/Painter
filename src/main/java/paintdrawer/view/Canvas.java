@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,13 +17,15 @@ import java.util.Observer;
  * View canvas component to draw shapes and implements observer pattern
  *
  */
-public class Canvas extends JPanel implements Observer, MouseListener
+public class Canvas extends JPanel implements Observer, MouseListener, MouseMotionListener
 {
     private FrontController front;
+    private Shape movingShape;
 
     public Canvas(FrontController front)
     {
          addMouseListener(this);
+         addMouseMotionListener(this);
          this.front = front;
     }
 
@@ -46,8 +49,6 @@ public class Canvas extends JPanel implements Observer, MouseListener
     @Override
     public void mouseClicked(MouseEvent e)
     {
-        System.out.println(String.format("X: %d, Y: %d", e.getX(), e.getY()));
-
         if (SwingUtilities.isRightMouseButton(e)) {
             front.getProperties().togglePropertyBoard(e);
         } else {
@@ -61,7 +62,7 @@ public class Canvas extends JPanel implements Observer, MouseListener
                 front.getModel().addShape(
                     shape,
                     e.getX(), e.getY(),
-                    properties.getLineSize(), true, properties.getColor()
+                    properties.getLineSize(), false, properties.getColor()
                 );
                 front.update();
             }
@@ -69,13 +70,21 @@ public class Canvas extends JPanel implements Observer, MouseListener
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e)
+    {
+        System.out.println("Mouse is pressed");
 
+        Shape s = front.getProperties().getIntersectingShape(e);
+
+        if (s != null && movingShape == null) {
+            movingShape = s;
+        }
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-
+    public void mouseReleased(MouseEvent e)
+    {
+        this.movingShape = null;
     }
 
     @Override
@@ -85,6 +94,23 @@ public class Canvas extends JPanel implements Observer, MouseListener
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e)
+    {
+        if (movingShape != null) {
+            System.out.println("Moving");
+
+            movingShape.setPosition(e.getX(), e.getY());
+            repaint();
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e)
+    {
 
     }
 }

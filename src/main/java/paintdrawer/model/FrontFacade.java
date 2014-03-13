@@ -31,6 +31,7 @@ public class FrontFacade extends Observable
         prototypes.addAll(Arrays.asList(new Rectangle(), new Oval()));
     }
 
+    public void setActiveShape(Shape shape) { activeShape = shape; }
     public Shape getActiveShape() { return activeShape; }
     public List<Shape> getShapes()
     {
@@ -53,13 +54,12 @@ public class FrontFacade extends Observable
         }
     }
 
-    // @TODO, fix this
     public List<LineSize> getLineWidths()
     {
         ArrayList<LineSize> sizeList = new ArrayList<LineSize>();
-        sizeList.add(new LineSize(10, "small"));
-        sizeList.add(new LineSize(20, "medium"));
-        sizeList.add(new LineSize(40, "large"));
+        sizeList.add(new LineSize(1));
+        sizeList.add(new LineSize(10));
+        sizeList.add(new LineSize(20));
 
         return sizeList;
     }

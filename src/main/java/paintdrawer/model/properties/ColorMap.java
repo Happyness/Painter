@@ -21,16 +21,6 @@ public class ColorMap
         colorMap = Collections.unmodifiableMap(populateColourMap(classWithColorFields));
     }
 
-    public Color getSelectedColor()
-    {
-        return this.color;
-    }
-
-    public void setColor(Color color)
-    {
-        this.color = color;
-    }
-
     public List<String> getColorLabels()
     {
         List<String> labels = new ArrayList<String>();
@@ -47,11 +37,22 @@ public class ColorMap
     public Map<String, Color> getAllColours() { return colorMap; }
     public Color getColor(String key) { return colorMap.get(key); }
 
+    private static String camelize(String s)
+    {
+        if (s.length() == 0) return s;
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+    }
+
     private Map<String,Color> populateColourMap(Class<?> classWithColorFields) {
         Map<String,Color> colourMap = new HashMap<String,Color>();
         for(Field f : classWithColorFields.getFields()) {
             if (isPublicStaticFinalColor(f)) {
-                try {colourMap.put(f.getName(), (Color)f.get(null));}
+                try {
+                    String name = f.getName();
+                    if (name.compareTo(name.toUpperCase()) == 0) {
+                        colourMap.put(camelize(name), (Color)f.get(null));
+                    }
+                }
                 catch (IllegalArgumentException e) {assert false : f;}
                 catch (IllegalAccessException e)   {assert false : f;}
             }

@@ -26,7 +26,6 @@ public abstract class Shape implements Serializable, Clone
         this.color = color;
         this.lineWidth = lineWidth;
         this.filled = filled;
-        this.filled = filled;
         this.x      = x;
         this.y      = y;
     }
@@ -36,14 +35,14 @@ public abstract class Shape implements Serializable, Clone
         return x >= this.x && x <= this.x + SIZE && y >= this.y && y <= this.y + SIZE;
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g)
+    {
         Graphics2D shape = (Graphics2D) g;
 
         if(marked) {
-            // TODO: set marked color
+            shape.setColor(Color.MAGENTA);
         } else {
             shape.setColor(color);
-            // TODO: set color
         }
         shape.setStroke(new BasicStroke(lineWidth));
         drawShape(shape, filled);
@@ -69,7 +68,7 @@ public abstract class Shape implements Serializable, Clone
         this.lineWidth = lineWidth;
     }
 
-    public boolean isFiled() {
+    public boolean isFilled() {
         return filled;
     }
 
