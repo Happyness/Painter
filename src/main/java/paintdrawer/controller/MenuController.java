@@ -53,6 +53,10 @@ public class MenuController implements ActionListener
             front.getModel().undo();
         }
 
+        if (e.getActionCommand().equals(MenuEntry.REDO.name())) {
+            front.getModel().redo();
+        }
+
         if (e.getActionCommand().equals(MenuEntry.SAVE.name())) {
             File file = menu.validFileDialog(false, new File("shapes.txt"));
 
