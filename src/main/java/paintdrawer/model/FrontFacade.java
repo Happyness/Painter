@@ -1,8 +1,16 @@
 package paintdrawer.model;
+;
+import paintdrawer.controller.FrontController;
+import paintdrawer.model.shapes.Shape;
+import paintdrawer.model.properties.ColorMap;
+import paintdrawer.model.properties.LineSize;
+import paintdrawer.model.shapes.*;
+import paintdrawer.model.shapes.Rectangle;
 
 import java.awt.*;
-import java.io.File;
+import java.io.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * @author Mats Maatson, Joel Denke
@@ -12,43 +20,108 @@ import java.util.*;
  */
 public class FrontFacade extends Observable
 {
-    java.util.List<paintdrawer.model.abstracts.Shape> drawnShapes;
-    java.util.List<paintdrawer.model.abstracts.Shape> prototypeShapes;
+    private List<Shape> shapes = new ArrayList<Shape>();
+    private List<Shape> prototypes = new ArrayList<Shape>();
+    private Shape activeShape;
+    private FrontController front;
 
-    public FrontFacade()
+    public FrontFacade(FrontController front)
     {
-        drawnShapes = new ArrayList<paintdrawer.model.abstracts.Shape>();
-        prototypeShapes = new ArrayList<paintdrawer.model.abstracts.Shape>();
+        this.front = front;
+        prototypes.addAll(Arrays.asList(new Rectangle(), new Oval()));
     }
 
-    public void drawShape(String shapeName, int x, int y, int lineWidth, boolean filled, Color color)
+    public Shape getActiveShape() { return activeShape; }
+    public List<Shape> getShapes()
     {
-        paintdrawer.model.abstracts.Shape shape = null;
+        return shapes;
+    }
+    public List<Shape> getPrototypes()
+    {
+        return prototypes;
+    }
 
-        for (paintdrawer.model.abstracts.Shape s : prototypeShapes) {
-            if (s.getName().equalsIgnoreCase(shapeName)) {
-                shape = s.cloneShape();
-                break;
+    public void addShape(String shapeName, int x, int y, int lineWidth, boolean filled, Color color)
+    {
+        for (Shape s : prototypes) {
+            if (s.toString().equalsIgnoreCase(shapeName)) {
+                Shape shape = s.cloneShape();
+                shape.init(color, lineWidth, filled, x, y);
+                addShape(shape);
+                front.update();
             }
         }
+    }
 
-        if (shape != null) {
-            shape.init(color, lineWidth, filled, x, y);
-            drawnShapes.add(shape);
-            setChanged();
-            notifyObservers();
-        }
+    // @TODO, fix this
+    public List<LineSize> getLineWidths()
+    {
+        ArrayList<LineSize> sizeList = new ArrayList<LineSize>();
+        sizeList.add(new LineSize(10, "small"));
+        sizeList.add(new LineSize(20, "medium"));
+        sizeList.add(new LineSize(40, "large"));
+
+        return sizeList;
+    }
+
+    public List<String> getColors()
+    {
+        return new ColorMap(Color.class).getColorLabels();
+    }
+
+    public void undo()
+    {
+         // @TODO: Fix history stack with latest shape changes and call latest command and unexecute/undo
+    }
+
+    public void redo()
+    {
+        // @TODO: Fix history stack with latest shape changes and call latest command and execute/redo
+    }
+
+    public void addShape(Shape shape)
+    {
+        shapes.add(shape);
+    }
+
+    public void removeShape(Shape shape)
+    {
+        shapes.remove(shape);
     }
 
     public boolean save(File file)
     {
         System.out.println(file.getAbsolutePath());
+        ObjectOutputStream stream = null;
+
+        try {
+            stream = new ObjectOutputStream(new FileOutputStream(file));
+            stream.writeObject(shapes);
+        } catch (Exception e) {
+            return false;
+        } finally {
+            try { if (stream != null) stream.close(); } catch (Exception e2) {}
+        }
+
         return true;
     }
 
     public boolean load(File file)
     {
         System.out.println(file.getAbsolutePath());
+        ObjectInputStream stream = null;
+
+        try {
+            stream = new ObjectInputStream(new FileInputStream(file));
+            shapes = (List<Shape>) stream.readObject();
+            front.update();
+        } catch (Exception e) {
+            shapes = new ArrayList<Shape>();
+            return false;
+        } finally {
+            try { if (stream != null) stream.close(); } catch (Exception e2) {}
+        }
+
         return true;
     }
 }

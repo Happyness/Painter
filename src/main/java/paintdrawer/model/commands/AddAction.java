@@ -1,9 +1,8 @@
 package paintdrawer.model.commands;
 
-import paintdrawer.model.abstracts.Shape;
+import paintdrawer.model.FrontFacade;
+import paintdrawer.model.shapes.Shape;
 import paintdrawer.model.interfaces.Command;
-
-import java.util.List;
 
 /**
  * @author Mats Maatson, Joel Denke
@@ -14,21 +13,22 @@ import java.util.List;
 public class AddAction implements Command {
 
     private Shape shape;
-    private List<Shape> shapes;
+    private FrontFacade model;
 
-    public AddAction(Shape shape, List<Shape> shapes) {
+    public AddAction(Shape shape, FrontFacade model)
+    {
         this.shape = shape;
-        this.shapes = shapes;
+        this.model = model;
     }
 
     @Override
     public void execute() {
-        shapes.add(shape);
+        model.addShape(shape);
     }
 
     @Override
     public void unexecute() {
-        shapes.remove(shape);
+        model.removeShape(shape);
     }
 
     @Override

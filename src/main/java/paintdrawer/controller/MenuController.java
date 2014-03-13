@@ -27,7 +27,7 @@ public class MenuController implements ActionListener
         this.front = front;
         this.menu  = menu;
         addActionListeners(menu.getMenuTab(MenuTab.FILE));
-        addActionListeners(menu.getMenuTab(MenuTab.FILE));
+        addActionListeners(menu.getMenuTab(MenuTab.EDIT));
     }
 
     private void addActionListeners(Map<MenuEntry, JMenuItem> tab)
@@ -50,7 +50,7 @@ public class MenuController implements ActionListener
         }
 
         if (e.getActionCommand().equals(MenuEntry.UNDO.name())) {
-            //model.undo();
+            front.getModel().undo();
         }
 
         if (e.getActionCommand().equals(MenuEntry.SAVE.name())) {

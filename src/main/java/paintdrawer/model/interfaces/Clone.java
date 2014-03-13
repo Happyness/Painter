@@ -1,6 +1,6 @@
 package paintdrawer.model.interfaces;
 
-import paintdrawer.model.abstracts.Shape;
+import paintdrawer.model.shapes.Shape;
 
 /**
  * @author Mats Maatson, Joel Denke
