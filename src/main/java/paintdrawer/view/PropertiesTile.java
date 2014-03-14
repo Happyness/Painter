@@ -84,24 +84,26 @@ public class PropertiesTile extends Toolbar implements Observer
         return null;
     }
 
+    public void setMatchingItemIndex(int box, String label)
+    {
+        JComboBox cbox = getBox(box);
+
+        for (int i = 0; i < cbox.getItemCount(); i++) {
+            if (cbox.getItemAt(i).toString().equals(label)) {
+                cbox.setSelectedIndex(i);
+            }
+        }
+    }
+
     @Override
     public void update(Observable o, Object arg)
     {
         Shape shape = front.getModel().getActiveShape();
 
         if (shape != null) {
-            System.out.println("We have a active shape, yay");
-
-            getBox(0).setSelectedItem(getShapeSizeObject(shape.getSize()).toString());
-            System.out.println(getBox(0).getSelectedItem());
-
-            getBox(1).setSelectedItem(getLineSizeObject(shape.getLineWidth()).toString());
-
-            System.out.println(getBox(0).getSelectedItem());
-
-
-            getBox(2).setSelectedItem(shape.getColor().toString());
-
+            setMatchingItemIndex(0, getShapeSizeObject(shape.getSize()).toString());
+            setMatchingItemIndex(1, getLineSizeObject(shape.getLineWidth()).toString());
+            setMatchingItemIndex(2, shape.getColor().toString());
         }
     }
 }
