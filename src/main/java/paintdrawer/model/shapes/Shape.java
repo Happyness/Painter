@@ -39,13 +39,20 @@ public abstract class Shape implements Serializable, IClone
     {
         Graphics2D shape = (Graphics2D) g;
 
-        if(marked) {
-            shape.setColor(Color.MAGENTA);
+        shape.setColor(color);
+
+        if (marked) {
+            final float dash1[] = {10.0f};
+            final BasicStroke dashed =
+                    new BasicStroke(1.0f,
+                            BasicStroke.CAP_BUTT,
+                            BasicStroke.JOIN_MITER,
+                            10.0f, dash1, 0.0f);
+            shape.setStroke(dashed);
         } else {
-            shape.setColor(color);
+            shape.setStroke(new BasicStroke(lineWidth));
         }
 
-        shape.setStroke(new BasicStroke(lineWidth));
         drawShape(shape, filled);
     }
 
