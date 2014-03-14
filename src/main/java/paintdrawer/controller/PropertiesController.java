@@ -2,31 +2,33 @@ package paintdrawer.controller;
 
 import paintdrawer.model.commands.ColorAction;
 import paintdrawer.model.commands.LineWidthAction;
+import paintdrawer.model.commands.RemoveAction;
 import paintdrawer.model.commands.ResizeAction;
 import paintdrawer.model.interfaces.ICommand;
 import paintdrawer.model.shapes.Shape;
 import paintdrawer.view.PropertiesTile;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
+import java.awt.event.*;
 import java.util.List;
 
 /**
  * Created by joel on 2014-03-12.
  */
-public class PropertiesController implements ActionListener
+public class PropertiesController implements ActionListener, PopupMenuListener
 {
     private FrontController front;
     private PropertiesTile propertiesTile;
     private Shape markedShape;
+    private JComboBox sizeBox, lineBox, colorBox;
 
     private final int SIZE = 0;
     private final int LINEWIDTH = 1;
     private final int COLOR = 2;
-    private final int CLOSE = 3;
-    private final int DELETE = 4;
+    private final int DELETE = 3;
+    private final int CLOSE = 4;
 
     public PropertiesController(FrontController front, PropertiesTile propertiesTile)
     {
@@ -38,17 +40,17 @@ public class PropertiesController implements ActionListener
 
     private void initListeners(PropertiesTile propertiesTile)
     {
-        JComboBox sizeBox = (JComboBox) propertiesTile.getComponent(SIZE);
+        sizeBox = (JComboBox) propertiesTile.getComponent(SIZE);
         sizeBox.setActionCommand(PropertiesTile.Components.SIZE.name());
-        sizeBox.addActionListener(this);
+        sizeBox.addPopupMenuListener(this);
 
-        JComboBox lineBox = (JComboBox) propertiesTile.getComponent(LINEWIDTH);
+        lineBox = (JComboBox) propertiesTile.getComponent(LINEWIDTH);
         lineBox.setActionCommand(PropertiesTile.Components.LINEWIDTH.name());
-        lineBox.addActionListener(this);
+        lineBox.addPopupMenuListener(this);
 
-        JComboBox colorBox = (JComboBox) propertiesTile.getComponent(COLOR);
+        colorBox = (JComboBox) propertiesTile.getComponent(COLOR);
         colorBox.setActionCommand(PropertiesTile.Components.COLOR.name());
-        colorBox.addActionListener(this);
+        colorBox.addPopupMenuListener(this);
 
         JButton closeButton = (JButton) propertiesTile.getComponent(CLOSE);
         closeButton.setActionCommand(PropertiesTile.Components.CLOSE.name());
@@ -63,6 +65,7 @@ public class PropertiesController implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         Shape shape = front.getModel().getActiveShape();
+        System.out.println(e.getActionCommand());
 
         if (e.getActionCommand().equals(PropertiesTile.Components.CLOSE.name())) {
             propertiesTile.setVisible(false);
@@ -70,22 +73,9 @@ public class PropertiesController implements ActionListener
             if (shape != null) {
                 shape.setMarked(false);
             }
-        }
-
-        if (shape != null) {
-            if (e.getActionCommand().equals(PropertiesTile.Components.SIZE.name())) {
-                ICommand resizeCommand = new ResizeAction(shape, propertiesTile.getShapeSize());
-                front.getModel().executeCommand(resizeCommand);
-            }
-
-            if (e.getActionCommand().equals(PropertiesTile.Components.LINEWIDTH.name())) {
-                ICommand lineWidthCommand = new LineWidthAction(shape, propertiesTile.getLineSize());
-                front.getModel().executeCommand(lineWidthCommand);
-            }
-
-            if (e.getActionCommand().equals(PropertiesTile.Components.COLOR.name())) {
-                ICommand colorCommand = new ColorAction(shape, propertiesTile.getColor());
-                front.getModel().executeCommand(colorCommand);
+        } else if (shape != null) {
+            if (e.getActionCommand().equals(PropertiesTile.Components.DELETE.name())) {
+                front.getModel().executeCommand(new RemoveAction(shape, front.getModel()));
             }
 
             front.update();
@@ -126,11 +116,39 @@ public class PropertiesController implements ActionListener
                 markedShape = s;
                 s.setMarked(true);
                 front.getModel().setActiveShape(s);
-                System.out.println("Set active shape");
             }
         }
 
         propertiesTile.setVisible(true);
         front.update();
+    }
+
+    @Override
+    public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+
+    }
+
+    @Override
+    public void popupMenuWillBecomeInvisible(PopupMenuEvent e)
+    {
+        System.out.println();
+        Shape shape = front.getModel().getActiveShape();
+
+        if (shape != null) {
+            if (e.getSource().equals(sizeBox)) {
+                front.getModel().executeCommand(new ResizeAction(shape, propertiesTile.getShapeSize()));
+            } else if (e.getSource().equals(lineBox)) {
+                front.getModel().executeCommand(new LineWidthAction(shape, propertiesTile.getLineSize()));
+            } else if (e.getSource().equals(colorBox)) {
+                front.getModel().executeCommand(new ColorAction(shape, propertiesTile.getColor()));
+            }
+
+            front.update();
+        }
+    }
+
+    @Override
+    public void popupMenuCanceled(PopupMenuEvent e) {
+
     }
 }

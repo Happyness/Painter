@@ -6,7 +6,8 @@ package paintdrawer.model.interfaces;
  * An command interface for command pattern
  *
  */
-public interface ICommand {
+public interface ICommand
+{
     public void execute();
     public void unexecute();
 }

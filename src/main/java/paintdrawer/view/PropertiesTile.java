@@ -40,8 +40,8 @@ public class PropertiesTile extends Toolbar implements Observer
         addComboBox(model.getLineWidths(), 1);
         addComboBox(model.getColors(), 2);
 
-        add(new JButton("Close"), null, 3);
-        add(new JButton("Delete"), null, 4);
+        add(new JButton("Delete"), null, 3);
+        add(new JButton("Close"), null, 4);
     }
 
     public int getShapeSize()

@@ -14,14 +14,12 @@ public class MoveAction implements ICommand
 {
     private int x, y, prevX, prevY;
     private Shape shape;
-    private FrontController front;
 
-    public MoveAction(Shape shape, FrontController front)
+    public MoveAction(Shape shape)
     {
         this.shape = shape;
         this.prevX = shape.getX();
         this.prevY = shape.getY();
-        this.front = front;
     }
 
     public Shape getShape()
@@ -39,13 +37,11 @@ public class MoveAction implements ICommand
     public void execute()
     {
         shape.setPosition(x, y);
-        front.update();
     }
 
     @Override
     public void unexecute()
     {
         shape.setPosition(prevX, prevY);
-        front.update();
     }
 }
