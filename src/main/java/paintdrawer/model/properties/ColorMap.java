@@ -34,10 +34,24 @@ public class ColorMap
         return labels;
     }
 
+    public String getLabel(Color color)
+    {
+        Iterator it = colorMap.entrySet().iterator();
+
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry)it.next();
+            if (color.equals((Color)pairs.getValue())) {
+                return camelize((String)pairs.getKey());
+            }
+        }
+
+        return "";
+    }
+
     public Map<String, Color> getAllColours() { return colorMap; }
     public Color getColor(String key) { return colorMap.get(key); }
 
-    private static String camelize(String s)
+    public static String camelize(String s)
     {
         if (s.length() == 0) return s;
         return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
