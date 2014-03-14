@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * @author Mats Maatson, Joel Denke
  *
- * An class that represents a Rectangle
+ * An class that represents a Oval
  *
  */
 public class Oval extends Shape
