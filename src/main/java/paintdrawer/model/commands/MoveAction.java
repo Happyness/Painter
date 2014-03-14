@@ -1,8 +1,7 @@
 package paintdrawer.model.commands;
 
 import paintdrawer.controller.FrontController;
-import paintdrawer.model.FrontFacade;
-import paintdrawer.model.interfaces.Command;
+import paintdrawer.model.interfaces.ICommand;
 import paintdrawer.model.shapes.Shape;
 
 /**
@@ -11,7 +10,7 @@ import paintdrawer.model.shapes.Shape;
  * An AddAction class implementing the command interface
  *
  */
-public class MoveAction implements Command
+public class MoveAction implements ICommand
 {
     private int x, y, prevX, prevY;
     private Shape shape;

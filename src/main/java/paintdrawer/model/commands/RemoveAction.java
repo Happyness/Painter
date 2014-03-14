@@ -8,17 +8,17 @@ import paintdrawer.model.shapes.Shape;
 /**
  * @author Mats Maatson, Joel Denke
  *
- * An AddAction class implementing the command interface
+ * An RemoveAction class implementing the command interface
  *
  */
-public class AddAction implements ICommand {
+public class RemoveAction implements ICommand {
 
     private Shape shape;
     private FrontFacade model;
     private FrontController front;
 
-    public AddAction(Shape shape, FrontFacade model, FrontController front)
-    {
+
+    public RemoveAction(Shape shape, FrontFacade model, FrontController front) {
         this.shape = shape;
         this.model = model;
         this.front = front;
@@ -26,13 +26,13 @@ public class AddAction implements ICommand {
 
     @Override
     public void execute() {
-        model.addShape(shape);
+        model.removeShape(shape);
         front.update();
     }
 
     @Override
     public void unexecute() {
-        model.removeShape(shape);
+        model.addShape(shape);
         front.update();
     }
 }

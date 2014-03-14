@@ -8,6 +8,6 @@ import paintdrawer.model.shapes.Shape;
  * An clone interface for prototype pattern
  *
  */
-public interface Clone {
+public interface IClone {
     public Shape cloneShape();
 }

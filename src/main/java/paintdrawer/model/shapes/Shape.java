@@ -1,7 +1,6 @@
 package paintdrawer.model.shapes;
 
-import paintdrawer.model.interfaces.Clone;
-import paintdrawer.model.properties.ColorMap;
+import paintdrawer.model.interfaces.IClone;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -12,7 +11,7 @@ import java.io.Serializable;
  * An abstract class that represents a Shape
  *
  */
-public abstract class Shape implements Serializable, Clone
+public abstract class Shape implements Serializable, IClone
 {
     private int size;
     private Color color;
