@@ -103,7 +103,9 @@ public class PropertiesTile extends Toolbar implements Observer
         if (shape != null) {
             setMatchingItemIndex(0, getShapeSizeObject(shape.getSize()).toString());
             setMatchingItemIndex(1, getLineSizeObject(shape.getLineWidth()).toString());
-            setMatchingItemIndex(2, shape.getColor().toString());
+
+            ColorMap map = new ColorMap(Color.class);
+            setMatchingItemIndex(2, map.getLabel(shape.getColor()));
         }
     }
 }
