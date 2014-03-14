@@ -15,24 +15,20 @@ public class AddAction implements ICommand {
 
     private Shape shape;
     private FrontFacade model;
-    private FrontController front;
 
-    public AddAction(Shape shape, FrontFacade model, FrontController front)
+    public AddAction(Shape shape, FrontFacade model)
     {
         this.shape = shape;
         this.model = model;
-        this.front = front;
     }
 
     @Override
     public void execute() {
         model.addShape(shape);
-        front.update();
     }
 
     @Override
     public void unexecute() {
         model.removeShape(shape);
-        front.update();
     }
 }

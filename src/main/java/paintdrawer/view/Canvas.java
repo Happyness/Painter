@@ -64,7 +64,7 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
                     shape,
                     properties.getShapeSize(),
                     e.getX(), e.getY(),
-                    properties.getLineSize(), false, properties.getColor()
+                    properties.getLineSize(), properties.getFilled(), properties.getColor()
                 );
                 front.update();
             }

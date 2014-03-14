@@ -13,26 +13,26 @@ import paintdrawer.model.shapes.Shape;
 public class FillAction implements ICommand {
 
     private Shape shape;
-    private FrontController front;
+    private boolean filled;
 
-    public FillAction(Shape shape, FrontController front) {
+    public FillAction(Shape shape, boolean filled) {
         this.shape = shape;
-        this.front =  front;
+        this.filled = filled;
     }
 
     @Override
-    public void execute() {
+    public void execute()
+    {
         if (shape != null) {
-            shape.setFilled(true);
-            front.update();
+            shape.setFilled(filled);
         }
     }
 
     @Override
-    public void unexecute() {
+    public void unexecute()
+    {
         if (shape != null) {
-            shape.setFilled(false);
-            front.update();
+            shape.setFilled(!filled);
         }
     }
 }

@@ -20,7 +20,7 @@ import java.util.Observer;
 public class PropertiesTile extends Toolbar implements Observer
 {
     public enum Components {
-        SIZE, LINEWIDTH, COLOR, DELETE, CLOSE
+        SIZE, LINEWIDTH, COLOR, DELETE, CLOSE, FILL
     }
 
     private FrontController front;
@@ -42,6 +42,7 @@ public class PropertiesTile extends Toolbar implements Observer
 
         add(new JButton("Delete"), null, 3);
         add(new JButton("Close"), null, 4);
+        add(new JToggleButton("Fill"), null, 5);
     }
 
     public int getShapeSize()
@@ -54,6 +55,12 @@ public class PropertiesTile extends Toolbar implements Observer
     {
         LineSize selected = (LineSize)getBox(1).getSelectedItem();
         return selected.getSize();
+    }
+
+    public boolean getFilled()
+    {
+        JToggleButton button = (JToggleButton)getComponent(5);
+        return button.isSelected();
     }
 
     public Color getColor()
@@ -106,6 +113,9 @@ public class PropertiesTile extends Toolbar implements Observer
 
             ColorMap map = new ColorMap(Color.class);
             setMatchingItemIndex(2, map.getLabel(shape.getColor()));
+
+            JToggleButton button = (JToggleButton)getComponent(5);
+            button.setSelected(shape.isFilled());
         }
     }
 }

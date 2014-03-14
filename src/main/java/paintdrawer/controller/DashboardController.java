@@ -38,10 +38,6 @@ public class DashboardController implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getActionCommand().equals(Dashboard.Components.SHAPES.name())) {
-            front.update();
-        }
-
         if (e.getActionCommand().equals(Dashboard.Components.PAINT.name())) {
             PropertiesTile properties = (PropertiesTile)front.getView().getComponent(1);
             properties.setVisible(true);

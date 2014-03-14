@@ -1,9 +1,6 @@
 package paintdrawer.controller;
 
-import paintdrawer.model.commands.ColorAction;
-import paintdrawer.model.commands.LineWidthAction;
-import paintdrawer.model.commands.RemoveAction;
-import paintdrawer.model.commands.ResizeAction;
+import paintdrawer.model.commands.*;
 import paintdrawer.model.interfaces.ICommand;
 import paintdrawer.model.shapes.Shape;
 import paintdrawer.view.PropertiesTile;
@@ -29,6 +26,7 @@ public class PropertiesController implements ActionListener, PopupMenuListener
     private final int COLOR = 2;
     private final int DELETE = 3;
     private final int CLOSE = 4;
+    private final int FILL = 5;
 
     public PropertiesController(FrontController front, PropertiesTile propertiesTile)
     {
@@ -59,6 +57,10 @@ public class PropertiesController implements ActionListener, PopupMenuListener
         JButton deleteButton = (JButton) propertiesTile.getComponent(DELETE);
         deleteButton.setActionCommand(PropertiesTile.Components.DELETE.name());
         deleteButton.addActionListener(this);
+
+        JToggleButton fillButton = (JToggleButton) propertiesTile.getComponent(FILL);
+        fillButton.setActionCommand(PropertiesTile.Components.FILL.name());
+        fillButton.addActionListener(this);
     }
 
     @Override
@@ -76,9 +78,14 @@ public class PropertiesController implements ActionListener, PopupMenuListener
         } else if (shape != null) {
             if (e.getActionCommand().equals(PropertiesTile.Components.DELETE.name())) {
                 front.getModel().executeCommand(new RemoveAction(shape, front.getModel()));
-            }
+            } else if (e.getActionCommand().equals(PropertiesTile.Components.FILL.name())) {
+                AbstractButton button = (AbstractButton)e.getSource();
+                System.out.println("Fill action: " + button.getModel().isArmed());
 
-            front.update();
+                if (button.getModel().isArmed()) {
+                    front.getModel().executeCommand(new FillAction(shape, button.getModel().isSelected()));
+                }
+            }
         }
     }
 

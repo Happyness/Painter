@@ -2,8 +2,6 @@ package paintdrawer.model;
 
 import paintdrawer.controller.FrontController;
 import paintdrawer.model.commands.AddAction;
-import paintdrawer.model.commands.FillAction;
-import paintdrawer.model.commands.UnfillAction;
 import paintdrawer.model.interfaces.ICommand;
 import paintdrawer.model.properties.ShapeSize;
 import paintdrawer.model.shapes.Shape;
@@ -55,21 +53,9 @@ public class FrontFacade extends Observable
             if (s.toString().equalsIgnoreCase(shapeName)) {
                 Shape shape = s.cloneShape();
                 shape.init(color, lineWidth, size, filled, x, y);
-
-                ICommand addCommand = new AddAction(shape, this, front);
-                executeCommand(addCommand);
+                executeCommand(new AddAction(shape, this));
             }
         }
-    }
-
-    public void fillShape(Shape shape) {
-        ICommand fillCommand = new FillAction(shape, front);
-        executeCommand(fillCommand);
-    }
-
-    public void unfillShape(Shape shape) {
-        ICommand unfillCommand = new UnfillAction(shape, front);
-        executeCommand(unfillCommand);
     }
 
     public List<ShapeSize> getShapeSizes()
@@ -173,5 +159,6 @@ public class FrontFacade extends Observable
         redoStack.clear();
         undoStack.push(command);
         command.execute();
+        front.update();
     }
 }
