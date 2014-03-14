@@ -1,5 +1,9 @@
 package paintdrawer.controller;
 
+import paintdrawer.model.commands.ColorAction;
+import paintdrawer.model.commands.LineWidthAction;
+import paintdrawer.model.commands.ResizeAction;
+import paintdrawer.model.interfaces.ICommand;
 import paintdrawer.model.shapes.Shape;
 import paintdrawer.view.PropertiesTile;
 
@@ -66,9 +70,12 @@ public class PropertiesController implements ActionListener
             Shape shape = front.getModel().getActiveShape();
 
             if (shape != null) {
-                shape.setSize(propertiesTile.getShapeSize());
-                shape.setColor(propertiesTile.getColor());
-                shape.setLineWidth(propertiesTile.getLineSize());
+                ICommand resizeCommand = new ResizeAction(shape, propertiesTile.getShapeSize());
+                front.getModel().executeCommand(resizeCommand);
+                ICommand colorCommand = new ColorAction(shape, propertiesTile.getColor());
+                front.getModel().executeCommand(colorCommand);
+                ICommand lineWidthCommand = new LineWidthAction(shape, propertiesTile.getLineSize());
+                front.getModel().executeCommand(lineWidthCommand);
                 shape.setMarked(false);
                 front.update();
             }

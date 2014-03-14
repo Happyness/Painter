@@ -109,7 +109,7 @@ public class FrontFacade extends Observable
 
     public void redo()
     {
-        if (!undoStack.empty() && !redoStack.empty()) {
+        if (!redoStack.empty()) {
             ICommand command = redoStack.pop();
             command.execute();
             undoStack.push(command);
