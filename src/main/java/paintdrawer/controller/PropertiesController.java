@@ -63,7 +63,6 @@ public class PropertiesController implements ActionListener, PopupMenuListener
     public void actionPerformed(ActionEvent e)
     {
         Shape shape = front.getModel().getActiveShape();
-        System.out.println(e.getActionCommand());
 
         if (e.getActionCommand().equals(PropertiesTile.Components.CLOSE.name())) {
             propertiesTile.setVisible(false);
@@ -76,7 +75,6 @@ public class PropertiesController implements ActionListener, PopupMenuListener
                 front.getModel().executeCommand(new RemoveAction(shape, front.getModel()));
             } else if (e.getActionCommand().equals(PropertiesTile.Components.FILL.name())) {
                 AbstractButton button = (AbstractButton)e.getSource();
-                System.out.println("Fill action: " + button.getModel().isArmed());
 
                 if (button.getModel().isArmed()) {
                     front.getModel().executeCommand(new FillAction(shape, button.getModel().isSelected()));

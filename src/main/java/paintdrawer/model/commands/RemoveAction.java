@@ -32,7 +32,6 @@ public class RemoveAction implements ICommand {
     @Override
     public void unexecute()
     {
-        System.out.println("Undo delete action");
         model.addShape(deletedShape);
     }
 }

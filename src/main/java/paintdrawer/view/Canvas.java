@@ -34,7 +34,6 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        System.out.println("Calling draw in canvas");
 
         for (Shape s : front.getModel().getShapes()) {
             s.draw(g);
@@ -45,6 +44,17 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
     public void update(Observable o, Object arg)
     {
         repaint();
+    }
+
+    public boolean isInsideCanvas(int x, int y, int size)
+    {
+        Rectangle bounds = getBounds();
+        Rectangle shape  = new Rectangle(x, y, x + size, y + size);
+
+        return bounds.contains(shape);
+
+        //return x > bounds.getX() && x + size < bounds.getX() + bounds.getWidth() &&
+         //      y > bounds.getY() && y + size < bounds.getY() + bounds.getHeight();
     }
 
     @Override
@@ -74,8 +84,6 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
     @Override
     public void mousePressed(MouseEvent e)
     {
-        System.out.println("Mouse is pressed");
-
         Dashboard dashboard = ((Dashboard)front.getView().getComponent(LayoutContainer.LayoutComponent.DASHBOARD.ordinal()));
         JToggleButton button = (JToggleButton)dashboard.getComponent(1);
         Shape s = front.getProperties().getIntersectingShape(e);
@@ -91,6 +99,7 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
         if (action != null) {
             action.setPosition(e.getX(), e.getY());
             front.getModel().executeCommand(action);
+
             action = null;
         }
     }
@@ -108,8 +117,6 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
     @Override
     public void mouseDragged(MouseEvent e){
         if (action != null) {
-            System.out.println("Moving");
-
             action.getShape().setPosition(e.getX(), e.getY());
             repaint();
         }
