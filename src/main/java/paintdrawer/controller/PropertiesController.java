@@ -107,6 +107,7 @@ public class PropertiesController implements ActionListener, PopupMenuListener
         if (markedShape != null) {
             markedShape.setMarked(false);
             markedShape = null;
+            front.getModel().setActiveShape(null);
         }
 
         if (s != null) {
