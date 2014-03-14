@@ -14,9 +14,9 @@ public class Triangle extends Shape {
     protected void drawShape(Graphics2D shape, boolean fill) {
         Polygon triangle = new Polygon(getXPoints(), getYPoints(), 3);
         if (fill) {
-            shape.drawPolygon(triangle);
-        } else {
             shape.fillPolygon(triangle);
+        } else {
+            shape.drawPolygon(triangle);
         }
     }
 
@@ -35,6 +35,6 @@ public class Triangle extends Shape {
     }
 
     private int[] getYPoints() {
-        return new int[]{this.getY(), this.getY() - this.getSize(), this.getY()};
+        return new int[]{this.getY(), this.getY() + this.getSize(), this.getY() + this.getSize()};
     }
 }
