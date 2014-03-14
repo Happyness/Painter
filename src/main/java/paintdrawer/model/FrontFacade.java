@@ -35,7 +35,7 @@ public class FrontFacade extends Observable
     public FrontFacade(FrontController front)
     {
         this.front = front;
-        prototypes.addAll(Arrays.asList(new Rectangle(), new Oval(), new Triangle()));
+        prototypes.addAll(Arrays.asList(new Rectangle(), new Oval(), new Triangle(), new Hexagon()));
     }
 
     public void setActiveShape(Shape shape) { activeShape = shape; }
