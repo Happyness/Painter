@@ -9,6 +9,8 @@ import paintdrawer.model.properties.LineSize;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,7 +20,7 @@ import java.util.Observer;
 public class PropertiesTile extends Toolbar implements Observer
 {
     public enum Components {
-        SIZE, LINEWIDTH, COLOR, SAVE, CLOSE
+        SIZE, LINEWIDTH, COLOR, DELETE, CLOSE
     }
 
     private FrontController front;
@@ -28,20 +30,18 @@ public class PropertiesTile extends Toolbar implements Observer
         this.front = front;
         this.initComponents();
         setOrientation(VERTICAL);
-
-        //System.out.println(Components.LINEWIDTH.ordinal());
     }
 
     private void initComponents()
     {
         FrontFacade model = front.getModel();
 
-        add(generateComboBox(asComboBoxModel(model.getShapeSizes())), null, 0);
-        add(generateComboBox(asComboBoxModel(model.getLineWidths())), null, 1);
-        add(generateComboBox(asComboBoxModel(model.getColors())), null, 2);
+        addComboBox(model.getShapeSizes(), 0);
+        addComboBox(model.getLineWidths(), 1);
+        addComboBox(model.getColors(), 2);
 
         add(new JButton("Close"), null, 3);
-        add(new JButton("Save"), null, 4);
+        add(new JButton("Delete"), null, 4);
     }
 
     public int getShapeSize()

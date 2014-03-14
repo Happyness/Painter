@@ -76,9 +76,11 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
     {
         System.out.println("Mouse is pressed");
 
+        Dashboard dashboard = ((Dashboard)front.getView().getComponent(LayoutContainer.LayoutComponent.DASHBOARD.ordinal()));
+        JToggleButton button = (JToggleButton)dashboard.getComponent(1);
         Shape s = front.getProperties().getIntersectingShape(e);
 
-        if (s != null && action == null && !SwingUtilities.isRightMouseButton(e)) {
+        if (s != null && action == null && !SwingUtilities.isRightMouseButton(e) && !button.isSelected()) {
             action = new MoveAction(s, front);
         }
     }

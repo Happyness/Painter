@@ -32,7 +32,7 @@ public abstract class Shape implements Serializable, IClone
 
     public boolean intersects(int x, int y)
     {
-        return x >= this.x && x <= this.x + size && y >= this.y && y <= this.y + size;
+        return x >= this.x && x <= this.x + size + lineWidth && y >= this.y && y <= this.y + size + lineWidth;
     }
 
     public void draw(Graphics g)

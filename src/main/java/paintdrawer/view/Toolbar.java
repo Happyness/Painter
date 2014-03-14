@@ -1,6 +1,8 @@
 package paintdrawer.view;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
@@ -17,6 +19,11 @@ public class Toolbar extends JToolBar
         }
 
         return model;
+    }
+
+    public void addComboBox(List list, int pos)
+    {
+        add(generateComboBox(asComboBoxModel(list)), null, pos);
     }
 
     protected JComboBox<String> generateComboBox(DefaultComboBoxModel model)

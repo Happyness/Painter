@@ -22,7 +22,7 @@ public class PropertiesController implements ActionListener
     private final int LINEWIDTH = 1;
     private final int COLOR = 2;
     private final int CLOSE = 3;
-    private final int SAVE = 4;
+    private final int DELETE = 4;
 
     public PropertiesController(FrontController front, PropertiesTile propertiesTile)
     {
@@ -50,28 +50,38 @@ public class PropertiesController implements ActionListener
         closeButton.setActionCommand(PropertiesTile.Components.CLOSE.name());
         closeButton.addActionListener(this);
 
-        JButton saveButton = (JButton) propertiesTile.getComponent(SAVE);
-        saveButton.setActionCommand(PropertiesTile.Components.SAVE.name());
-        saveButton.addActionListener(this);
+        JButton deleteButton = (JButton) propertiesTile.getComponent(DELETE);
+        deleteButton.setActionCommand(PropertiesTile.Components.DELETE.name());
+        deleteButton.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        Shape shape = front.getModel().getActiveShape();
+
         if (e.getActionCommand().equals(PropertiesTile.Components.CLOSE.name())) {
             propertiesTile.setVisible(false);
-        }
-
-        if (e.getActionCommand().equals(PropertiesTile.Components.SAVE.name())) {
-            Shape shape = front.getModel().getActiveShape();
 
             if (shape != null) {
-                shape.setSize(propertiesTile.getShapeSize());
-                shape.setColor(propertiesTile.getColor());
-                shape.setLineWidth(propertiesTile.getLineSize());
                 shape.setMarked(false);
-                front.update();
             }
+        }
+
+        if (shape != null) {
+            if (e.getActionCommand().equals(PropertiesTile.Components.SIZE.name())) {
+                    shape.setSize(propertiesTile.getShapeSize());
+            }
+
+            if (e.getActionCommand().equals(PropertiesTile.Components.LINEWIDTH.name())) {
+                shape.setLineWidth(propertiesTile.getLineSize());
+            }
+
+            if (e.getActionCommand().equals(PropertiesTile.Components.COLOR.name())) {
+                shape.setColor(propertiesTile.getColor());
+            }
+
+            front.update();
         }
     }
 

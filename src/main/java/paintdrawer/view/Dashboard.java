@@ -4,6 +4,8 @@ import paintdrawer.controller.FrontController;
 import paintdrawer.model.FrontFacade;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -28,7 +30,7 @@ public class Dashboard extends Toolbar implements Observer
     {
         FrontFacade model = front.getModel();
 
-        add(generateComboBox(asComboBoxModel(model.getPrototypes())), null, 0);
+        addComboBox(model.getPrototypes(), 0);
         add(new JToggleButton("Paint"), null, 1);
     }
 
