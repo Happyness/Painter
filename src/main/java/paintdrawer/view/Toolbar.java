@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Created by joel on 2014-03-13.
+ * @author Mats Maatson, Joel Denke
+ *
+ * Helper class for showing a toolbar
+ *
  */
 public class Toolbar extends JToolBar
 {

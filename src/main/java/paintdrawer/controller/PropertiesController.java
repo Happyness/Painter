@@ -12,7 +12,10 @@ import java.awt.event.*;
 import java.util.List;
 
 /**
- * Created by joel on 2014-03-12.
+ * @author Mats Maatson, Joel Denke
+ *
+ * An controller class controlling the shapes properties
+ *
  */
 public class PropertiesController implements ActionListener, PopupMenuListener
 {

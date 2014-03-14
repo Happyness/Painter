@@ -5,7 +5,10 @@ import java.awt.*;
 import java.net.URL;
 
 /**
- * Created by joel on 2014-03-12.
+ * @author Mats Maatson, Joel Denke
+ *
+ * Resource manager
+ *
  */
 public class ResourceManager
 {

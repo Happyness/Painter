@@ -15,7 +15,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by joel on 2014-03-12.
+ * @author Mats Maatson, Joel Denke
+ *
+ * An view showing the Property Menu
+ *
  */
 public class PropertiesTile extends Toolbar implements Observer
 {

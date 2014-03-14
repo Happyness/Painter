@@ -10,7 +10,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by joel on 2014-03-12.
+ * @author Mats Maatson, Joel Denke
+ *
+ * An view extending Toolbar showing the Dashboard and implementing the observer pattern
+ *
  */
 public class Dashboard extends Toolbar implements Observer
 {

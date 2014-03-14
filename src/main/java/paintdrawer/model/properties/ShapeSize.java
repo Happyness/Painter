@@ -1,7 +1,10 @@
 package paintdrawer.model.properties;
 
 /**
- * Created by joel on 2014-03-13.
+ * @author Mats Maatson, Joel Denke
+ *
+ * A helper class for the property ShapeSize
+ *
  */
 public class ShapeSize
 {
