@@ -101,6 +101,9 @@ public class FrontFacade extends Observable
     {
         if (!undoStack.empty()) {
             ICommand command = undoStack.pop();
+
+            System.out.println(command);
+
             command.unexecute();
             redoStack.push(command);
             front.update();
@@ -165,6 +168,8 @@ public class FrontFacade extends Observable
 
     public void executeCommand(ICommand command)
     {
+        System.out.println("Executing command" + command);
+
         redoStack.clear();
         undoStack.push(command);
         command.execute();

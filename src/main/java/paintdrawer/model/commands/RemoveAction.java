@@ -13,26 +13,26 @@ import paintdrawer.model.shapes.Shape;
  */
 public class RemoveAction implements ICommand {
 
-    private Shape shape;
+    private Shape shape, deletedShape;
     private FrontFacade model;
-    private FrontController front;
 
-
-    public RemoveAction(Shape shape, FrontFacade model, FrontController front) {
+    public RemoveAction(Shape shape, FrontFacade front)
+    {
         this.shape = shape;
-        this.model = model;
-        this.front = front;
+        this.model = front;
+        deletedShape = shape;
     }
 
     @Override
-    public void execute() {
+    public void execute()
+    {
         model.removeShape(shape);
-        front.update();
     }
 
     @Override
-    public void unexecute() {
-        model.addShape(shape);
-        front.update();
+    public void unexecute()
+    {
+        System.out.println("Undo delete action");
+        model.addShape(deletedShape);
     }
 }

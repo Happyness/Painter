@@ -81,7 +81,7 @@ public class Canvas extends JPanel implements Observer, MouseListener, MouseMoti
         Shape s = front.getProperties().getIntersectingShape(e);
 
         if (s != null && action == null && !SwingUtilities.isRightMouseButton(e) && !button.isSelected()) {
-            action = new MoveAction(s, front);
+            action = new MoveAction(s);
         }
     }
 

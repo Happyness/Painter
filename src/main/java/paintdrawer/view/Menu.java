@@ -14,12 +14,23 @@ import java.util.Map;
  */
 public class Menu extends JMenuBar
 {
+    public enum MenuTab
+    {
+        FILE, EDIT
+    }
+
+    public enum MenuEntry
+    {
+        EXIT, SAVE, OPEN, REDO, UNDO, NEW
+    }
+
     private final JFileChooser fileDialog = new JFileChooser();
     private Map<MenuEntry, JMenuItem> fileTab = new HashMap<MenuEntry, JMenuItem>();
     private Map<MenuEntry, JMenuItem> editTab = new HashMap<MenuEntry, JMenuItem>();
 
     public Menu()
     {
+        fileTab.put(MenuEntry.NEW, new JMenuItem("New canvas"));
         fileTab.put(MenuEntry.OPEN, new JMenuItem("Open canvas"));
         fileTab.put(MenuEntry.SAVE, new JMenuItem("Save canvas"));
         fileTab.put(MenuEntry.EXIT, new JMenuItem("Exit"));
