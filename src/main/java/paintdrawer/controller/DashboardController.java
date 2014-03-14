@@ -26,11 +26,11 @@ public class DashboardController implements ActionListener
 
     private void initListeners(Dashboard dashboard)
     {
-        JComboBox lineBox = (JComboBox) dashboard.getComponent(0);
+        JComboBox lineBox = (JComboBox) dashboard.getComponent(Dashboard.SHAPE);
         lineBox.setActionCommand(Dashboard.Components.SHAPES.name());
         lineBox.addActionListener(this);
 
-        JToggleButton saveButton = (JToggleButton) dashboard.getComponent(1);
+        JToggleButton saveButton = (JToggleButton) dashboard.getComponent(Dashboard.PAINT);
         saveButton.setActionCommand(Dashboard.Components.PAINT.name());
         saveButton.addActionListener(this);
     }
@@ -39,7 +39,7 @@ public class DashboardController implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (e.getActionCommand().equals(Dashboard.Components.PAINT.name())) {
-            PropertiesTile properties = (PropertiesTile)front.getView().getComponent(1);
+            PropertiesTile properties = (PropertiesTile)front.getView().getComponent(LayoutContainer.LayoutComponent.PROPERTIES.ordinal());
             properties.setVisible(true);
         }
     }

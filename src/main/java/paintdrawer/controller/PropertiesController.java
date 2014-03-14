@@ -21,13 +21,6 @@ public class PropertiesController implements ActionListener, PopupMenuListener
     private Shape markedShape;
     private JComboBox sizeBox, lineBox, colorBox;
 
-    private final int SIZE = 0;
-    private final int LINEWIDTH = 1;
-    private final int COLOR = 2;
-    private final int DELETE = 3;
-    private final int CLOSE = 4;
-    private final int FILL = 5;
-
     public PropertiesController(FrontController front, PropertiesTile propertiesTile)
     {
         this.front = front;
@@ -38,27 +31,27 @@ public class PropertiesController implements ActionListener, PopupMenuListener
 
     private void initListeners(PropertiesTile propertiesTile)
     {
-        sizeBox = (JComboBox) propertiesTile.getComponent(SIZE);
+        sizeBox = (JComboBox) propertiesTile.getComponent(PropertiesTile.SIZE);
         sizeBox.setActionCommand(PropertiesTile.Components.SIZE.name());
         sizeBox.addPopupMenuListener(this);
 
-        lineBox = (JComboBox) propertiesTile.getComponent(LINEWIDTH);
+        lineBox = (JComboBox) propertiesTile.getComponent(PropertiesTile.LINEWIDTH);
         lineBox.setActionCommand(PropertiesTile.Components.LINEWIDTH.name());
         lineBox.addPopupMenuListener(this);
 
-        colorBox = (JComboBox) propertiesTile.getComponent(COLOR);
+        colorBox = (JComboBox) propertiesTile.getComponent(PropertiesTile.COLOR);
         colorBox.setActionCommand(PropertiesTile.Components.COLOR.name());
         colorBox.addPopupMenuListener(this);
 
-        JButton closeButton = (JButton) propertiesTile.getComponent(CLOSE);
+        JButton closeButton = (JButton) propertiesTile.getComponent(PropertiesTile.CLOSE);
         closeButton.setActionCommand(PropertiesTile.Components.CLOSE.name());
         closeButton.addActionListener(this);
 
-        JButton deleteButton = (JButton) propertiesTile.getComponent(DELETE);
+        JButton deleteButton = (JButton) propertiesTile.getComponent(PropertiesTile.DELETE);
         deleteButton.setActionCommand(PropertiesTile.Components.DELETE.name());
         deleteButton.addActionListener(this);
 
-        JToggleButton fillButton = (JToggleButton) propertiesTile.getComponent(FILL);
+        JToggleButton fillButton = (JToggleButton) propertiesTile.getComponent(PropertiesTile.FILL);
         fillButton.setActionCommand(PropertiesTile.Components.FILL.name());
         fillButton.addActionListener(this);
     }

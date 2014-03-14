@@ -23,6 +23,13 @@ public class PropertiesTile extends Toolbar implements Observer
         SIZE, LINEWIDTH, COLOR, DELETE, CLOSE, FILL
     }
 
+    public static final int SIZE = 1;
+    public static final int LINEWIDTH = 3;
+    public static final int COLOR = 5;
+    public static final int DELETE = 6;
+    public static final int CLOSE = 7;
+    public static final int FILL = 8;
+
     private FrontController front;
 
     public PropertiesTile(FrontController front)
@@ -36,36 +43,39 @@ public class PropertiesTile extends Toolbar implements Observer
     {
         FrontFacade model = front.getModel();
 
-        addComboBox(model.getShapeSizes(), 0);
-        addComboBox(model.getLineWidths(), 1);
-        addComboBox(model.getColors(), 2);
+        add(new JLabel("Shape size"), 0);
+        addComboBox(model.getShapeSizes(), SIZE);
+        add(new JLabel("Line width"), 2);
+        addComboBox(model.getLineWidths(), LINEWIDTH);
+        add(new JLabel("Color"), 4);
+        addComboBox(model.getColors(), COLOR);
 
-        add(new JButton("Delete"), null, 3);
-        add(new JButton("Close"), null, 4);
-        add(new JToggleButton("Fill"), null, 5);
+        add(new JButton("Delete"), null, DELETE);
+        add(new JButton("Close"), null, CLOSE);
+        add(new JToggleButton("Fill"), null, FILL);
     }
 
     public int getShapeSize()
     {
-        ShapeSize selected = (ShapeSize)getBox(0).getSelectedItem();
+        ShapeSize selected = (ShapeSize)getBox(SIZE).getSelectedItem();
         return selected.getSize();
     }
 
     public int getLineSize()
     {
-        LineSize selected = (LineSize)getBox(1).getSelectedItem();
+        LineSize selected = (LineSize)getBox(LINEWIDTH).getSelectedItem();
         return selected.getSize();
     }
 
     public boolean getFilled()
     {
-        JToggleButton button = (JToggleButton)getComponent(5);
+        JToggleButton button = (JToggleButton)getComponent(FILL);
         return button.isSelected();
     }
 
     public Color getColor()
     {
-        String selected = (String)getBox(2).getSelectedItem();
+        String selected = (String)getBox(COLOR).getSelectedItem();
         return new ColorMap(Color.class).getColor(selected);
     }
 
@@ -108,13 +118,13 @@ public class PropertiesTile extends Toolbar implements Observer
         Shape shape = front.getModel().getActiveShape();
 
         if (shape != null) {
-            setMatchingItemIndex(0, getShapeSizeObject(shape.getSize()).toString());
-            setMatchingItemIndex(1, getLineSizeObject(shape.getLineWidth()).toString());
+            setMatchingItemIndex(SIZE, getShapeSizeObject(shape.getSize()).toString());
+            setMatchingItemIndex(LINEWIDTH, getLineSizeObject(shape.getLineWidth()).toString());
 
             ColorMap map = new ColorMap(Color.class);
-            setMatchingItemIndex(2, map.getLabel(shape.getColor()));
+            setMatchingItemIndex(COLOR, map.getLabel(shape.getColor()));
 
-            JToggleButton button = (JToggleButton)getComponent(5);
+            JToggleButton button = (JToggleButton)getComponent(FILL);
             button.setSelected(shape.isFilled());
         }
     }

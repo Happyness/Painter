@@ -18,6 +18,9 @@ public class Dashboard extends Toolbar implements Observer
         SHAPES, PAINT
     }
 
+    public final static int SHAPE = 0;
+    public final static int PAINT = 1;
+
     private FrontController front;
 
     public Dashboard(FrontController front)
@@ -30,8 +33,8 @@ public class Dashboard extends Toolbar implements Observer
     {
         FrontFacade model = front.getModel();
 
-        addComboBox(model.getPrototypes(), 0);
-        add(new JToggleButton("Paint"), null, 1);
+        addComboBox(model.getPrototypes(), Dashboard.SHAPE);
+        add(new JToggleButton("Paint"), null, Dashboard.PAINT);
     }
 
     @Override
